@@ -1,0 +1,58 @@
+<mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">
+        {{ isEditMode ? 'Editar Producto' : 'Registrar Producto' }}
+      </mat-card-title>
+    </mat-card-header>
+  
+    <mat-card-content class="b-t-1">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Nombre</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput formControlName="nombre" placeholder="Nombre del producto" />
+            </mat-form-field>
+          </div>
+  
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Descripción</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <textarea matInput formControlName="descripcion" placeholder="Descripción"></textarea>
+            </mat-form-field>
+          </div>
+  
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Precio</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input type="number" matInput formControlName="precio" />
+            </mat-form-field>
+          </div>
+  
+          <div class="col-lg-6">
+            <mat-label class="f-w-600 m-b-8 d-block">Stock</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input type="number" matInput formControlName="stock" />
+            </mat-form-field>
+          </div>
+
+        
+  
+          <div class="col-lg-12">
+            <mat-label class="f-w-600 m-b-8 d-block">Imagen (URL)</mat-label>
+            <mat-form-field appearance="outline" class="w-100">
+              <input matInput formControlName="imagen" placeholder="URL de la imagen" />
+            </mat-form-field>
+          </div>
+        </div>
+  
+        <div class="m-t-12">
+          <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+            {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+          </button>
+          <button mat-stroked-button color="warn" (click)="onCancel()" type="button">Cancelar</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

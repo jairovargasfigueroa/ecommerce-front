@@ -1,0 +1,23 @@
+.catalogo-container {
+  padding: 20px;
+}
+
+.row {
+  gap: 20px; /* Espaciado entre las tarjetas */
+}
+
+.col-lg-4,
+.col-md-6,
+.col-sm-12 {
+  margin-bottom: 20px; /* Espaciado inferior entre filas */
+}
+
+mat-sidenav {
+  width: 300px; /* Ancho del panel lateral */
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+mat-drawer {
+  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+}

@@ -1,0 +1,48 @@
+<!-- 
+
+<div class="carrito-container">
+  <h2>🛒 Mi Carrito</h2>
+
+  <div *ngIf="carrito.length > 0; else carritoVacio">
+    <div *ngFor="let producto of carrito" class="producto-card">
+      <mat-card>
+        <img mat-card-image [src]="producto.imagen" [alt]="producto.nombre" />
+        <mat-card-content>
+          <h3>{{ producto.nombre }}</h3>
+          <p>Cantidad: {{ producto.cantidad }}</p>
+          <p>Precio unitario: ${{ producto.precio }}</p>
+          <p>Total: ${{ producto.precio * producto.cantidad }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="warn" (click)="eliminarProducto(producto.id)">
+            Eliminar
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="total-container">
+      <h3>Total: ${{ total }}</h3>
+    </div>
+  </div>
+
+  <ng-template #carritoVacio>
+    <p>Tu carrito está vacío.</p>
+  </ng-template>
+</div> -->
+
+<div class="p-4 space-y-4">
+  <mat-card *ngFor="let item of carrito">
+    <mat-card-title>{{ item.nombre }}</mat-card-title>
+    <mat-card-content>
+      <p>Precio: {{ item.precio | currency }}</p>
+      <p>Cantidad: {{ item.cantidad }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- <div *ngIf="carrito.length">
+    <button mat-raised-button color="warn" (click)="carritoService.vaciarCarrito()">Vaciar carrito</button>
+  </div> -->
+
+  <p *ngIf="!carrito.length">Tu carrito está vacío.</p>
+</div>

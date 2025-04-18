@@ -1,0 +1,117 @@
+<!-- <div class="row justify-content-center">
+  <div class="d-flex justify-content-end m-b-16">
+    <button mat-raised-button color="primary" [routerLink]="'/carrito'">
+      Ir al carrito ({{ carrito.length }} productos)
+    </button>
+  </div>
+    <div class="col-lg-4" *ngFor="let producto of paginatedProducts">
+      <mat-card class="cardWithShadow position-relative overflow-hidden">
+        <div class="position-relative">
+          <img
+            mat-card-image
+            [src]="producto.imagen"
+            alt="{{ producto.nombre }}"
+            class="w-100"
+          />
+          <div class="card-overlay h-100 d-flex align-items-end justify-content-end">
+            <span class="f-s-12 f-w-600 m-y-16 m-r-16 p-y-4 p-x-8 rounded-pill bg-white">
+              {{ producto.fecha_creacion | date:'shortDate' }}
+            </span>
+          </div>
+        </div>
+  
+        <mat-card-content class="p-y-24">
+          <div class="user-category">
+            <span class="f-s-12 m-y-16 f-w-600 p-x-8 p-y-4 bg-light rounded-pill">
+              Stock: {{ producto.stock }}
+            </span>
+          </div>
+          <mat-card-title class="m-t-20 text-hover-primary cursor-pointer">
+            {{ producto.nombre }}
+          </mat-card-title>
+          <p class="f-s-14 text-muted">{{ producto.descripcion }}</p>
+          <h5 class="f-s-18 text-primary m-t-8">${{ producto.precio }}</h5>
+  
+          <div class="d-flex align-items-center justify-content-center m-t-24">
+            <button mat-flat-button color="primary" (click)="addToCart(producto)">
+              Agregar al carrito
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  
+ -->
+
+ <mat-drawer-container class="w-100 h-100" autosize>
+
+  <!-- ✅ Drawer lateral derecho que NO tapa el catálogo -->
+  <mat-drawer #drawer mode="side" position="end" opened class="p-4" style="width: 320px;">
+    <h4 class="mb-3">🛒 Tu carrito</h4>
+    <div *ngIf="carrito.length; else carritoVacio">
+      <div *ngFor="let item of carrito" class="mb-3 border-bottom pb-2">
+        <!-- Card para cada item del carrito -->
+        <mat-card class="cardWithShadow">
+          <mat-card-header>
+            <mat-card-title>{{ item.nombre }}</mat-card-title>
+            <mat-card-subtitle>Cantidad: {{ item.stock }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Precio: ${{ item.precio }}</p>
+          </mat-card-content>
+
+          <button mat-flat-button color="primary" (click)="addToCart(item)">
+            Agregar producto
+          </button>
+          <button mat-flat-button color="primary" (click)="quitarProducto(item)">
+            quitar producto
+          </button>
+        </mat-card>
+      </div>
+      <button mat-raised-button color="primary" [routerLink]="'/carrito'">Ir al carrito</button>
+    </div>
+    <ng-template #carritoVacio>
+      <p>Tu carrito está vacío.</p>
+    </ng-template>
+  </mat-drawer>
+
+  <!-- 📦 Contenido del catálogo (lado izquierdo) -->
+  <div mat-drawer-content class="p-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-4" *ngFor="let producto of paginatedProducts">
+        <mat-card class="cardWithShadow position-relative overflow-hidden">
+          <div class="position-relative">
+            <img mat-card-image [src]="producto.imagen" alt="{{ producto.nombre }}" class="w-100" />
+            <div class="card-overlay h-100 d-flex align-items-end justify-content-end">
+              <span class="f-s-12 f-w-600 m-y-16 m-r-16 p-y-4 p-x-8 rounded-pill bg-white">
+                {{ producto.fecha_creacion | date:'shortDate' }}
+              </span>
+            </div>
+          </div>
+
+          <mat-card-content class="p-y-24">
+            <div class="user-category">
+              <span class="f-s-12 m-y-16 f-w-600 p-x-8 p-y-4 bg-light rounded-pill">
+                Stock: {{ producto.stock }}
+              </span>
+            </div>
+            <mat-card-title class="m-t-20 text-hover-primary cursor-pointer">
+              {{ producto.nombre }}
+            </mat-card-title>
+            <p class="f-s-14 text-muted">{{ producto.descripcion }}</p>
+            <h5 class="f-s-18 text-primary m-t-8">${{ producto.precio }}</h5>
+
+            <div class="d-flex align-items-center justify-content-center m-t-24">
+              <button mat-flat-button color="primary" (click)="addToCart(producto)">
+                Agregar al carrito
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+</mat-drawer-container>
+
