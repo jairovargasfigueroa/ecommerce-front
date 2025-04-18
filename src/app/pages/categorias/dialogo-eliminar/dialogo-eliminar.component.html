@@ -1,0 +1,16 @@
+<h4 mat-dialog-title>Confirmación</h4>
+
+<mat-dialog-content>
+    <p>¿Estás seguro de que seas eliminar la categoría <strong>{{ data.nombre }}</strong>?</p>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-flat-button color="primary" style="border-radius: 24px; padding: 6px 24px"
+    (click)="confirmar()">
+        Si
+    </button>
+    <button mat-stroked-button class="bg-error text-white" style="border-radius: 24px; padding: 6px 24px"
+    (click)="cancelar()">
+        Cancelar
+    </button>
+</mat-dialog-actions>

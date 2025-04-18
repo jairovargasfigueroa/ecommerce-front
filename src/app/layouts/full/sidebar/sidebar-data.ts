@@ -40,6 +40,13 @@ export const navItems: NavItem[] = [
   },
 
   {
+    displayName: 'Categorias',
+    iconName: 'solar:checklist-bold', // Puedes usar cualquier ícono de Solar Icons
+    route: '/categorias',             // Debe coincidir con la ruta configurada
+    roles: ['administrador'] // Solo el rol administrador puede acceder a esta ruta
+  },
+
+  {
     displayName: 'Catalogo',
     iconName: 'solar:bag-3-line-duotone', // Puedes usar cualquier ícono de Solar Icons
     route: '/catalogo',             // Debe coincidir con la ruta configurada
