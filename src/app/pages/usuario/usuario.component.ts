@@ -15,6 +15,9 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class UsuarioComponent implements OnInit{
 
+  totalRegistros = 0;
+  paginaActual = 1;
+
 
   columnas : String[]= ['username','email','rol']; 
   dataSource = new MatTableDataSource<any>();
@@ -29,11 +32,13 @@ export class UsuarioComponent implements OnInit{
     this.obtenerUsuarios();
   }
 
-  obtenerUsuarios():void{
-    this.apiService.get<any>('usuarios/').subscribe({
+  obtenerUsuarios(){
+    const pagina = this.paginator?.pageIndex ?? 0;
+    this.apiService.get<any>('usuarios/',{page:pagina +1}).subscribe({
       next:(data) => {
         console.log('usuarios obtenidos:', data);
-        this.dataSource.data = data;
+        this.dataSource.data = data.results;
+        this.totalRegistros = data.count;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         
@@ -41,6 +46,10 @@ export class UsuarioComponent implements OnInit{
       
     });
 
+  }
+
+  ngAfterViewInit() {
+    this.paginator.page.subscribe(() => this.obtenerUsuarios());
   }
 
   applyFilter(event: Event): void {

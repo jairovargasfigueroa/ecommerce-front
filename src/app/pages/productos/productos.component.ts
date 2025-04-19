@@ -33,7 +33,8 @@ import { Router } from '@angular/router';
 })
 export class ProductosComponent implements OnInit {
 
-  rolUsuario : String | null = null;
+  totalRegistros = 0;
+  paginaActual = 1;
 
   displayedColumns: string[] = [
      'imagen','nombre', 'descripcion', 'precio', 'stock', 'fecha_creacion','acciones'
@@ -55,24 +56,26 @@ export class ProductosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductos();
-    this.rolUsuario = localStorage.getItem('userRol');
-
-    if (this.rolUsuario !== 'cliente') {
-      // Podés redirigir a otra vista si no es admin
-      this.router.navigate(['/dashboard']);
-    }
   }
 
+  
+
   getProductos() {
-    this.apiService.get<any>('productos/').subscribe({
+    const pagina = this.paginator?.pageIndex ?? 0;
+    this.apiService.get<any>('productos/',{page:pagina +1}).subscribe({
       next: (data) =>{ 
-        this.dataSource.data = data;
+        this.dataSource.data = data.results;
+        this.totalRegistros = data.count;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
         console.log('Productos obtenidos:', data);
       },
       error: (err) => console.error('Error al obtener productos', err)
     });
+  }
+
+  ngAfterViewInit() {
+    this.paginator.page.subscribe(() => this.getProductos());
   }
 
 
@@ -110,17 +113,5 @@ export class ProductosComponent implements OnInit {
   eliminarProducto(id: number): void {
     this.apiService.delete('productos', id).subscribe(() => this.getProductos());
   }
-
-
-  esAdmin(): boolean {
-    return this.rolUsuario ==='administrador'
-  }
-
-  esCliente(): boolean {
-    return this.rolUsuario ==='cliente'
-  }
-  esDelivery(): boolean {
-    return this.rolUsuario ==='delivery'
-  }    
 
 }

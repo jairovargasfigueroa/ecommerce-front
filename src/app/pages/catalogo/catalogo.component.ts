@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatDrawer, MatSidenav } from '@angular/material/sidenav';
+
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from 'src/app/material.module';
 import { ApiService } from 'src/app/services/api.service';
@@ -29,46 +30,39 @@ export class CatalogoComponent implements OnInit {
   carrito: any[] = [];
 
   productos: any[] = []; // Lista completa de productos
-  paginatedProducts: any[] = []; // Productos que se mostrarán en la página actual
   pageSize = 10; // Número de productos por página
-  currentPage = 0; // Página actual
-  totalProducts = 0; // Total de productos
+  paginaActual = 0; // Página actual
+  totalProductos = 0; // Total de productos
 
+  
   constructor(private apiService: ApiService,
               private carritoService :CarritoService
   ) {}
 
   ngOnInit(): void {
     this.getProducts();
-
-     // Cargar el carrito desde localStorage
-  //const carritoActual = localStorage.getItem('carrito');
-  //this.carrito = carritoActual ? JSON.parse(carritoActual) : [];
-  this.carrito = this.carritoService.obtenerCarrito(); // Obtener el carrito del servicio
+    this.carrito = this.carritoService.obtenerCarrito(); // Obtener el carrito del servicio
   }
 
+  
+
   getProducts(): void {
-    this.apiService.get<any[]>('productos/').subscribe({
+
+    this.apiService.get<any>('productos/',{ page: this.paginaActual + 1 }).subscribe({
       next: (data) => {
         console.log('Productos obtenidos:', data);
-        this.productos = data;
-        this.totalProducts = data.length;
-        this.updatePaginatedProducts();
+        this.productos = data.results;
+        this.totalProductos = data.count;
       },
       error: (err) => console.error('Error al obtener productos', err)
     });
   }
 
-  updatePaginatedProducts(): void {
-    const startIndex = this.currentPage * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    this.paginatedProducts = this.productos.slice(startIndex, endIndex);
-  }
 
   onPageChange(event: PageEvent): void {
     this.pageSize = event.pageSize;
-    this.currentPage = event.pageIndex;
-    this.updatePaginatedProducts();
+    this.paginaActual = event.pageIndex;
+    this.getProducts();
   }
 
   addToCart(producto: any): void {

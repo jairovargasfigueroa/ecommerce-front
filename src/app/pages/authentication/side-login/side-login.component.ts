@@ -42,12 +42,9 @@ export class AppSideLoginComponent {
       next: (data:any) =>{
         console.log(data);
         
-        localStorage.setItem('token', data.acces);
-        //localStorage.setItem('user', JSON.stringify(data.user));
-        //ocalStorage.setItem('userId', data.user.id);
-        localStorage.setItem('userName', data.username);
-        //localStorage.setItem('userEmail', data.user.email);
-        localStorage.setItem('userRol', data.rol);
+        localStorage.setItem('token', data.access);
+        localStorage.setItem('usuario', data.username);
+        localStorage.setItem('rol', data.rol);
         this.router.navigate(['/dashboard']);
       },
        error: (error:any) =>{

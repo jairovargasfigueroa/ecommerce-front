@@ -27,19 +27,16 @@ export class AppNavItemComponent implements OnChanges {
   @Input() item: NavItem | any;
 
   expanded: any = false;
-
-  rolUsuario: String | null = null;
+  rolUsuario: string = localStorage.getItem('rol') || '';
 
   @HostBinding('attr.aria-expanded') ariaExpanded = this.expanded;
   @Input() depth: any;
 
   constructor(public navService: NavService, public router: Router) {
-    this.rolUsuario = localStorage.getItem('userRol');
   }
 
-  puedeVerItem(): boolean {
-    if (!this.item.roles || this.item.roles.length === 0) return true;
-    return this.item.roles.includes(this.rolUsuario);
+  puedeVerItem(item: NavItem): boolean {
+    return !item.roles || item.roles.includes(this.rolUsuario);
   }
 
   ngOnChanges() {

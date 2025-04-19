@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -22,12 +23,14 @@ export const routes: Routes = [
         path: 'usuarios',
         loadComponent: () =>
           import('./pages/usuario/usuario.component').then((m) => m.UsuarioComponent),
+        canActivate:[authGuard(['admin'])]
       },
 
       {
         path: 'productos',
         loadComponent: () =>
           import('./pages/productos/productos.component').then((m) => m.ProductosComponent),
+        canActivate:[authGuard(['admin','cliente','delivery'])]
       },
 
       {
@@ -42,11 +45,13 @@ export const routes: Routes = [
         path: 'catalogo',
         loadComponent: () =>
           import('./pages/catalogo/catalogo.component').then((m) => m.CatalogoComponent),
+        canActivate:[]
       },
       {
         path: 'carrito',
         loadComponent: () =>
           import('./pages/carrito/carrito.component').then((m) => m.CarritoComponent),
+        canActivate:[authGuard(['admin'])]
       },
       {
         path: 'ui-components',
