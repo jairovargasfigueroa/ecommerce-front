@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --base-href /static/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -23,7 +23,9 @@
     "@ng-matero/extensions": "^17.0.0",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
+    "@stripe/stripe-js": "^7.2.0",
     "angular-tabler-icons": "^2.7.0",
+    "angularx-qrcode": "^19.0.0",
     "apexcharts": "^3.40.0",
     "iconify": "^1.4.0",
     "ng-apexcharts": "^1.7.6",

@@ -1,48 +1,34 @@
-<!-- 
-
-<div class="carrito-container">
-  <h2>🛒 Mi Carrito</h2>
-
-  <div *ngIf="carrito.length > 0; else carritoVacio">
-    <div *ngFor="let producto of carrito" class="producto-card">
-      <mat-card>
-        <img mat-card-image [src]="producto.imagen" [alt]="producto.nombre" />
-        <mat-card-content>
-          <h3>{{ producto.nombre }}</h3>
-          <p>Cantidad: {{ producto.cantidad }}</p>
-          <p>Precio unitario: ${{ producto.precio }}</p>
-          <p>Total: ${{ producto.precio * producto.cantidad }}</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button color="warn" (click)="eliminarProducto(producto.id)">
-            Eliminar
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-
-    <div class="total-container">
-      <h3>Total: ${{ total }}</h3>
-    </div>
-  </div>
-
-  <ng-template #carritoVacio>
-    <p>Tu carrito está vacío.</p>
-  </ng-template>
-</div> -->
-
 <div class="p-4 space-y-4">
-  <mat-card *ngFor="let item of carrito">
-    <mat-card-title>{{ item.nombre }}</mat-card-title>
-    <mat-card-content>
-      <p>Precio: {{ item.precio | currency }}</p>
-      <p>Cantidad: {{ item.cantidad }}</p>
-    </mat-card-content>
+  <mat-card *ngFor="let item of carrito" class="flex items-center justify-between p-4">
+    <div class="flex items-center gap-4">
+      <img [src]="item.imagen" alt="Imagen del producto" width="80" height="80" class="rounded border" />
+
+      <div>
+        <h3 class="text-lg font-semibold">{{ item.nombre }}</h3>
+        <p>Cantidad: {{ item.cantidad }}</p>
+        <p>Precio unitario: {{ item.precio | currency }}</p>
+        <p>Subtotal: {{ item.precio * item.cantidad | currency }}</p>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <button mat-icon-button color="primary" (click)="agregarProducto(item)">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button color="accent" (click)="quitarProducto(item)">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="eliminarProducto(item)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </mat-card>
 
-  <!-- <div *ngIf="carrito.length">
-    <button mat-raised-button color="warn" (click)="carritoService.vaciarCarrito()">Vaciar carrito</button>
-  </div> -->
+  <div *ngIf="carrito.length > 0" class="mt-4 space-y-2">
+    <p class="text-xl font-bold">Total: {{ total | currency }}</p>
+    <button mat-raised-button color="primary" (click)="irAPagar()">Ir a pagar</button>
+    <button mat-raised-button color="warn" (click)="vaciarCarrito()">Vaciar carrito</button>
+  </div>
 
   <p *ngIf="!carrito.length">Tu carrito está vacío.</p>
 </div>

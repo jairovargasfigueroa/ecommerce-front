@@ -82,4 +82,10 @@ export class CatalogoComponent implements OnInit {
     console.log('Carrito actualizado:', this.carrito);
   }  
 
+  vaciarCarrito():void{
+    this.carritoService.vaciarCarrito();
+    this.carrito = this.carritoService.obtenerCarrito();
+    console.log('Carrito Vacio',this.carrito);
+  }
+
 }

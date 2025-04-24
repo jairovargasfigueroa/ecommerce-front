@@ -1,0 +1,37 @@
+<mat-card class="p-4">
+    <h2 class="f-s-20 f-w-600">🧾 Pedido #{{ data.id }}</h2>
+    <mat-divider class="m-y-16"></mat-divider>
+  
+    <div class="mb-2">
+      <strong>📌 Estado:</strong> {{ data.estado }}
+    </div>
+    <div class="mb-2">
+      <strong>📅 Fecha:</strong> {{ data.fecha_pedido | date: 'medium' }}
+    </div>
+    <div class="mb-2" *ngIf="data.usuario">
+      <strong>👤 Cliente:</strong> {{ data.usuario }}
+    </div>
+    <div class="mb-2">
+      <strong>💰 Total:</strong> ${{ data.monto_total }}
+    </div>
+  
+    <mat-divider class="m-y-16"></mat-divider>
+    <h3 class="f-s-18 f-w-600">🛍 Productos</h3>
+  
+    <mat-list>
+      <mat-list-item *ngFor="let item of data.items">
+        <div class="w-100">
+          <div class="f-w-500">{{ item.producto?.nombre }}</div>
+          <div class="text-muted f-s-14">
+            {{ item.cantidad }} x ${{ item.precio_unitario }} = 
+            <strong>${{ item.cantidad * item.precio_unitario }}</strong>
+          </div>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  
+    <div class="text-end mt-4">
+      <button mat-flat-button color="primary" (click)="cerrar()">Cerrar</button>
+    </div>
+  </mat-card>
+  

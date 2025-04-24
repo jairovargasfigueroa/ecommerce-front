@@ -18,6 +18,34 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./pages/pages.routes').then((m) => m.PagesRoutes),
       },
+
+      {
+        path: 'pedidos',
+        loadComponent: () =>
+          import('./pages/pedidos/pedidos.component').then((m) => m.PedidosComponent),
+        canActivate:[authGuard(['admin','cliente',])]
+      },
+      
+      {
+        path: 'confirmar-pedido',
+        loadComponent: () =>
+          import('./pages/pedidos/confirmar-pedido/confirmar-pedido.component').then((m) => m.ConfirmarPedidoComponent),
+        canActivate:[authGuard(['cliente','admin'])]
+      },
+
+      {
+        path: 'pago-exitoso',
+        loadComponent: () =>
+          import('./pages/pagos/pago-exitoso/pago-exitoso.component').then((m) => m.PagoExitosoComponent),
+      },
+
+      {
+        path: 'pago-cancelado',
+        loadComponent: () =>
+          import('./pages/pagos/pago-cancelado/pago-cancelado.component').then((m) => m.PagoCanceladoComponent),
+      },
+
+      
       
       {
         path: 'usuarios',
@@ -45,14 +73,13 @@ export const routes: Routes = [
         path: 'catalogo',
         loadComponent: () =>
           import('./pages/catalogo/catalogo.component').then((m) => m.CatalogoComponent),
-        canActivate:[]
       },
       {
         path: 'carrito',
         loadComponent: () =>
           import('./pages/carrito/carrito.component').then((m) => m.CarritoComponent),
-        canActivate:[authGuard(['admin'])]
       },
+
       {
         path: 'ui-components',
         loadChildren: () =>
@@ -77,6 +104,7 @@ export const routes: Routes = [
           import('./pages/authentication/authentication.routes').then(
             (m) => m.AuthenticationRoutes
           ),
+        
       },
     ],
   },

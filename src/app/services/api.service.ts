@@ -10,7 +10,8 @@ export class ApiService {
   private baseUrl = environment.apiUrl;
 
   private defaultHeaders = new HttpHeaders({
-    'Content-Type': 'application/json',
+     'Content-Type': 'application/json',
+    //  'myHeaders' : 'cualquierCosa'
   });
 
 
@@ -27,21 +28,35 @@ export class ApiService {
     });
   }
 
-  post<T>(endpoint: string, body: any): Observable<T> {
+  post<T>(endpoint: string, body: any ,headers = 0): Observable<T> {
     return this.http.post<T>(`${this.baseUrl}/${endpoint}`, body, {
-      headers: this.defaultHeaders,
+      headers: !headers?this.defaultHeaders:undefined,
     });
   }
 
-  put<T>(endpoint: string, id: number, body: any): Observable<T> {
+  put<T>(endpoint: string, id: number, body: any, headers = 0): Observable<T> {
     return this.http.put<T>(`${this.baseUrl}/${endpoint}/${id}/`, body, {
-      headers: this.defaultHeaders
+      headers: !headers ? this.defaultHeaders : undefined
     });
   }
+  
+
+  // put<T>(endpoint: string, id: number, body: any): Observable<T> {
+  //   return this.http.put<T>(`${this.baseUrl}/${endpoint}/${id}/`, body, {
+  //     headers: this.defaultHeaders
+  //   });
+  // }
 
   delete<T>(endpoint: string, id: number): Observable<T> {
     return this.http.delete<T>(`${this.baseUrl}/${endpoint}/${id}/`, {
       headers: this.defaultHeaders
     });
   }
+
+  patch<T>(endpoint: string, id: number, body: any): Observable<T> {
+    return this.http.patch<T>(`${this.baseUrl}/${endpoint}/${id}/`, body, {
+      headers: this.defaultHeaders
+    });
+  }
+  
 }

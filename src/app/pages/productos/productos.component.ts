@@ -14,6 +14,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MaterialModule } from 'src/app/material.module';
 import { Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   standalone: true,
@@ -40,7 +41,6 @@ export class ProductosComponent implements OnInit {
      'imagen','nombre', 'descripcion', 'precio', 'stock', 'fecha_creacion','acciones'
   ];
 
-  //dataSource: any[] =[];
   dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -61,13 +61,13 @@ export class ProductosComponent implements OnInit {
   
 
   getProductos() {
-    const pagina = this.paginator?.pageIndex ?? 0;
-    this.apiService.get<any>('productos/',{page:pagina +1}).subscribe({
+    const pagina = this.paginator.pageIndex + 1;
+    this.apiService.get<any>('productos/',{page:pagina}).subscribe({
       next: (data) =>{ 
         this.dataSource.data = data.results;
         this.totalRegistros = data.count;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        // this.dataSource.paginator = this.paginator;
+        // this.dataSource.sort = this.sort;
         console.log('Productos obtenidos:', data);
       },
       error: (err) => console.error('Error al obtener productos', err)
@@ -75,6 +75,7 @@ export class ProductosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    this.getProductos(); // cargar página inicial
     this.paginator.page.subscribe(() => this.getProductos());
   }
 
@@ -92,20 +93,21 @@ export class ProductosComponent implements OnInit {
     const dialogRef = this.dialog.open(ProductoDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.apiService.post('productos/', result).subscribe(() => this.getProductos());
+        this.apiService.post('productos/', result,1).subscribe(() => this.getProductos());
       }
     });
   }
 
   editarProducto(producto: any): void {
     const dialogRef = this.dialog.open(ProductoDialogComponent, {
+      width: '1000px',
       data: producto
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        console.log('Producto editado:', result);
+        console.log('Producto a editadar:', result);
         const {id,... produtoEditado} =result;
-        this.apiService.put('productos', producto.id, produtoEditado).subscribe(() => this.getProductos());
+        this.apiService.put('productos', producto.id, result,1).subscribe(() => this.getProductos());
       }
     });
   }

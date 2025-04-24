@@ -18,7 +18,7 @@ export class AppSideLoginComponent {
   ) {}
 
   form = new FormGroup({
-    uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
 
@@ -30,22 +30,27 @@ export class AppSideLoginComponent {
       return;
     }
 
-    const body = {
-      username : this.form.value.uname,
-      password : this.form.value.password
-    };
-
     const datos = this.form.value;
     console.log(datos);
 
-    this.apiService.post<any>("usuarios/login/",body).subscribe({
+    this.apiService.post<any>("usuarios/login/",datos).subscribe({
       next: (data:any) =>{
-        console.log(data);
+        console.log('UsuarioLogueado',data);
         
         localStorage.setItem('token', data.access);
-        localStorage.setItem('usuario', data.username);
+        localStorage.setItem('refresh', data.refresh);
+        localStorage.setItem('username', data.username);
+        localStorage.setItem('user_id', data.user_id.toString());
         localStorage.setItem('rol', data.rol);
-        this.router.navigate(['/dashboard']);
+        
+        const redir = localStorage.getItem('redireccionPendiente');
+
+        if(redir){
+          //localStorage.removeItem('redireccionPendiente');
+          this.router.navigate([redir]);
+        }else{
+          this.router.navigate(['/dashboard']);
+        }
       },
        error: (error:any) =>{
         console.log(error,"Error credenciale incorrectas");
@@ -55,4 +60,17 @@ export class AppSideLoginComponent {
     console.log("se llamo al api correctamente");
   
   }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refresh');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('username');
+    localStorage.removeItem('redireccionPendiente');
+    localStorage.removeItem('carrito'); // opcional
+  
+    // Redirigís al usuario al catálogo o login
+    this.router.navigate(['/catalogo']);
+  }
+
 }

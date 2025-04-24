@@ -1,0 +1,48 @@
+<div *ngIf="cargando">Cargando pedido...</div>
+
+<div *ngIf="pedido" class="pedido-container">
+  <h2>📝 Confirmar Pedido</h2>
+  <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+  <p><strong>Fecha:</strong> {{ pedido.fecha_pedido | date }}</p>
+  <p><strong>Monto total:</strong> ${{ pedido.monto_total }}</p>
+
+  <h3>🛒 Productos:</h3>
+  <ul>
+    <li *ngFor="let item of pedido.items">
+      {{ item.producto.nombre }} - {{ item.cantidad }} x ${{ item.precio_unitario }}
+    </li>
+  </ul>
+
+  <!-- Selección de Tipo de Entrega -->
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Tipo de Entrega</mat-label>
+    <mat-select [(value)]="tipoEntrega">
+      <mat-option value="tienda">Recoger en Tienda</mat-option>
+      <mat-option value="delivery">Delivery</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Selección de Método de Pago -->
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Método de Pago</mat-label>
+    <mat-select [(value)]="metodoPago">
+      <mat-option value="qr">QR</mat-option>
+      <mat-option value="efectivo">Efectivo</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- Botones de Acción -->
+  <div class="acciones">
+    <button mat-raised-button color="primary" (click)="pagarConTarjeta()">
+      💳 Pagar con Tarjeta
+    </button>
+
+    <button mat-raised-button color="accent" (click)="finalizarPedido()">
+      ✅ Confirmar Pedido
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!pedido && !cargando">
+  <p>No hay pedido pendiente para confirmar.</p>
+</div>

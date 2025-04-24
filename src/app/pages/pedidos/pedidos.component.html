@@ -1,0 +1,90 @@
+<div class="table-wrapper">
+    <!-- Campo de búsqueda -->
+    <div class="table-header">
+      <mat-form-field appearance="outline">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar Pedidos" />
+      </mat-form-field>
+  
+      <!-- Visible solo para administradores -->
+  <div>
+    <button mat-raised-button color="primary">Agregar Pedido</button>
+    <!-- otras funciones exclusivas del admin -->
+  </div>
+       
+    </div>
+  
+    <!-- Tabla -->
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+       
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+          </ng-container>
+
+  
+        <!-- Descripción -->
+        <ng-container matColumnDef="monto_total">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> monto_total </th>
+          <td mat-cell *matCellDef="let element"> {{ element.monto_total }} </td>
+        </ng-container>
+  
+        <!-- Stock -->
+        <ng-container matColumnDef="estado">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
+          <td mat-cell *matCellDef="let element"> {{ element.estado }} </td>
+        </ng-container>
+
+        <!-- Stock -->
+        <ng-container matColumnDef="fecha_pedido">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha del pedido </th>
+            <td mat-cell *matCellDef="let element"> {{ element.fecha_pedido }} </td>
+          </ng-container>
+  
+        <!-- Acciones -->
+        <!-- <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Acciones </th>
+          <td mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="edi(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="eliminarProducto(element.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container> -->
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14"></th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="verDetallePedido(element)">
+                  <mat-icon>visibility</mat-icon>
+                  <span>Ver mas detalles</span>
+                </button>
+              </mat-menu>
+            </td>
+        </ng-container>
+  
+  
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+      </table>
+    </div>
+  
+    <!-- Paginador -->
+    <div class="table-footer">
+      <mat-paginator
+        [length]="totalRegistros"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+

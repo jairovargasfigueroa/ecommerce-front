@@ -38,9 +38,9 @@ export class CarritoService {
 
     const productoExistente = this.carrito.find((p) =>p.id === producto.id);
     if (productoExistente) { 
-      productoExistente.stock += 1; // Incrementar la cantidad si ya existe
+      productoExistente.cantidad += 1; // Incrementar la cantidad si ya existe
     }else{
-      this.carrito.push({ ...producto, stock: 1 }); // Agregar el producto con cantidad inicial 1
+      this.carrito.push({ ...producto, cantidad: 1 }); // Agregar el producto con cantidad inicial 1
     }
     this.guardarCarrito(); // Guardar el carrito actualizado en localStorage
 
@@ -48,13 +48,23 @@ export class CarritoService {
 
    quitarProducto(producto:any):void{
     const productoExistente = this.carrito.find((p) => p.id === producto.id);
-    if(productoExistente.stock<=1){
+    if(productoExistente.cantidad<=1){
      this.carrito = this.carrito.filter((p) => p.id !== producto.id); // Eliminar el producto del carrito
     }else {
-      productoExistente.stock-=1; //Decrementa el producto
+      productoExistente.cantidad-=1; //Decrementa el producto
     }
     this.guardarCarrito(); // Guardar el carrito actualizado en localStorage
    }
+
+  eliminarProducto(producto: any): void {
+    this.carrito = this.carrito.filter((p) => p.id !== producto.id);
+    this.guardarCarrito();
+  } 
+
+  vaciarCarrito():void{
+    localStorage.removeItem('carrito');
+    this.carrito= [];
+  } 
   
 
 }

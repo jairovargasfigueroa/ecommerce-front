@@ -53,14 +53,13 @@
       <div *ngFor="let item of carrito" class="mb-3 border-bottom pb-2">
         <!-- Card para cada item del carrito -->
         <mat-card class="cardWithShadow">
-          <mat-card-header>
-            <mat-card-title>{{ item.nombre }}</mat-card-title>
-            <mat-card-subtitle>Cantidad: {{ item.stock }}</mat-card-subtitle>
-          </mat-card-header>
+          <img mat-card-image [src]="item.imagen" [alt]="item.nombre" />
           <mat-card-content>
-            <p>Precio: ${{ item.precio }}</p>
+            <p>Nombre: {{ item.nombre }}</p>
+            <p>Precio: {{ item.precio | currency }}</p>
+            <p>Cantidad: ${{ item.stock }}</p>
+            <p>Descripcion: {{ item.descripcion }}</p>
           </mat-card-content>
-
           <button mat-flat-button color="primary" (click)="addToCart(item)">
             Agregar producto
           </button>
@@ -69,7 +68,11 @@
           </button>
         </mat-card>
       </div>
-      <button mat-raised-button color="primary" [routerLink]="'/carrito'">Ir al carrito</button>
+      <div>
+        <button mat-raised-button color="primary" [routerLink]="'/carrito'">Ir al carrito</button>
+        <button mat-raised-button color="primary" (click)="vaciarCarrito()">Vaciar carrito</button>
+      </div>
+      
     </div>
     <ng-template #carritoVacio>
       <p>Tu carrito está vacío.</p>

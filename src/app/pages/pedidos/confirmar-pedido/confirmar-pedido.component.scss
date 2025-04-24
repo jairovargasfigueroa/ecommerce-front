@@ -1,0 +1,50 @@
+.snackbar-success {
+    background-color: #4caf50;  // Verde
+    color: white;
+  }
+  
+  .snackbar-error {
+    background-color: #f44336;  // Rojo
+    color: white;
+  }
+ 
+  .pedido-container {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .acciones {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+
+  .qr-section {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  
+    mat-card {
+      padding: 20px;
+      max-width: 300px;
+    }
+  }
+  
+  .mt-2 { margin-top: 0.5rem; }
+  .mt-4 { margin-top: 1rem; }
+  .mt-6 { margin-top: 1.5rem; }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .space-x-4 > *:not(:last-child) {
+    margin-right: 1rem;
+  }
+  
+    

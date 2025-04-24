@@ -18,7 +18,12 @@ export const navItems: NavItem[] = [
     chipClass: 'bg-secondary text-white',
     chipContent: 'PRO',
   },
-
+  {
+    displayName: 'Pedidos',
+    iconName: 'solar:bag-3-line-duotone', // Puedes usar cualquier ícono de Solar Icons
+    route: '/pedidos',             // Debe coincidir con la ruta configurada
+    roles: ['admin','cliente','delivery'] // Solo el rol administrador puede acceder a esta ruta
+  },
   
   {
     displayName: 'Usuarios',
@@ -42,22 +47,22 @@ export const navItems: NavItem[] = [
   {
     displayName: 'Categorias',
     iconName: 'solar:checklist-bold', // Puedes usar cualquier ícono de Solar Icons
-    route: '/categorias',             // Debe coincidir con la ruta configurada
-    roles: ['administrador'] // Solo el rol administrador puede acceder a esta ruta
+    route: '/categorias',            // Debe coincidir con la ruta configurada
+    roles: ['admin'] // Solo el rol administrador puede acceder a esta ruta
   },
 
   {
     displayName: 'Catalogo',
     iconName: 'solar:bag-3-line-duotone', // Puedes usar cualquier ícono de Solar Icons
     route: '/catalogo',             // Debe coincidir con la ruta configurada
-    roles: ['admin','cliente'] // Solo el rol administrador puede acceder a esta ruta
+    roles: ['','cliente','admin'] // Solo el rol administrador puede acceder a esta ruta
   },
 
   {
     displayName: 'Carrito',
     iconName: 'solar:bag-3-line-duotone', // Puedes usar cualquier ícono de Solar Icons
     route: '/carrito',             // Debe coincidir con la ruta configurada
-    roles: ['admin','cliente'] // Solo el rol administrador puede acceder a esta ruta
+    roles: ['','cliente','admin'] // Solo el rol administrador puede acceder a esta ruta
   },
 
   {

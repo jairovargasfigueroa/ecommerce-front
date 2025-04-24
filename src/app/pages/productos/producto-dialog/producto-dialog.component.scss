@@ -1,0 +1,32 @@
+.scroll-container {
+    max-height: 60vh;
+    overflow-y: auto;     // Solo scroll vertical
+    overflow-x: hidden;   // Oculta cualquier desborde horizontal
+    padding-right: 10px;
+  }
+  
+  /* Estilo para la imagen */
+  .preview-container {
+    max-width: 100%;
+    height: auto;
+  
+    img {
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 4px;
+    }
+  }
+  
+  /* Espaciado */
+  .m-t-12 {
+    margin-top: 12px;
+  }
+  
+  .m-t-16 {
+    margin-top: 16px;
+  }
+  
+  .m-b-4 {
+    margin-bottom: 4px;
+  }
+  
