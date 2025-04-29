@@ -1,23 +1,64 @@
-.catalogo-container {
-  padding: 20px;
-}
+// .catalogo-container {
+//   padding: 20px;
+// }
 
-.row {
-  gap: 20px; /* Espaciado entre las tarjetas */
-}
+// .cardWithShadow {
+//   transition: transform 0.3s ease;
+//   max-width: 100%;
+//   height: 400px;         /* Establece una altura fija para las tarjetas */
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   margin-bottom: 20px;
+// }
 
-.col-lg-4,
-.col-md-6,
-.col-sm-12 {
-  margin-bottom: 20px; /* Espaciado inferior entre filas */
-}
+// .cardWithShadow img {
+//   width: 100%;           /* Asegura que la imagen ocupe todo el ancho del contenedor */
+//   height: 200px;         /* Establece una altura fija para la imagen */
+//   object-fit: cover;     /* Asegura que la imagen cubra el área de la imagen sin deformarse */
+//   object-position: center;  /* Centra la imagen si tiene un tamaño diferente */
+// }
 
-mat-sidenav {
-  width: 300px; /* Ancho del panel lateral */
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-mat-drawer {
-  box-shadow: -2px 0 10px rgba(0,0,0,0.1);
-}
+// .row {
+//   gap: 20px; /* Espaciado entre las tarjetas */
+// }
+
+// .col-lg-4,
+// .col-md-6,
+// .col-sm-12 {
+//   margin-bottom: 20px; /* Espaciado inferior entre filas */
+// }
+
+// mat-sidenav {
+//   width: 300px; /* Ancho del panel lateral */
+//   background-color: #f9f9f9;
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+// }
+
+// mat-drawer {
+//   box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+// }
+
+// // .cardWithShadow {
+// //   transition: transform 0.3s ease;
+// //   max-width: 100%; /* Para que las tarjetas se ajusten al contenedor */
+// //   margin-bottom: 20px;
+// // }
+
+// // .row {
+// //   display: grid;
+// //   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Asegura que las tarjetas se ajusten según el tamaño disponible */
+// //   gap: 1rem;
+// // }
+
+// // @media (max-width: 768px) {
+// //   .row {
+// //     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Para pantallas pequeñas */
+// //   }
+// // }
+
+// .row .mat-card {
+//   margin-bottom: 20px; /* o el valor que prefieras */
+// }
+

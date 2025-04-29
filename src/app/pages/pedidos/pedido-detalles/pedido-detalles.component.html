@@ -6,7 +6,7 @@
       <strong>📌 Estado:</strong> {{ data.estado }}
     </div>
     <div class="mb-2">
-      <strong>📅 Fecha:</strong> {{ data.fecha_pedido | date: 'medium' }}
+      <strong>📅 Fecha:</strong> {{ data.fecha_pedido | date: 'short' }}
     </div>
     <div class="mb-2" *ngIf="data.usuario">
       <strong>👤 Cliente:</strong> {{ data.usuario }}
@@ -14,6 +14,7 @@
     <div class="mb-2">
       <strong>💰 Total:</strong> ${{ data.monto_total }}
     </div>
+
   
     <mat-divider class="m-y-16"></mat-divider>
     <h3 class="f-s-18 f-w-600">🛍 Productos</h3>
@@ -21,7 +22,7 @@
     <mat-list>
       <mat-list-item *ngFor="let item of data.items">
         <div class="w-100">
-          <div class="f-w-500">{{ item.producto?.nombre }}</div>
+          <div class="f-w-500">{{ item.producto_nombre || ''}}</div>
           <div class="text-muted f-s-14">
             {{ item.cantidad }} x ${{ item.precio_unitario }} = 
             <strong>${{ item.cantidad * item.precio_unitario }}</strong>

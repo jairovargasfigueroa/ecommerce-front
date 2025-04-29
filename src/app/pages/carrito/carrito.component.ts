@@ -28,6 +28,7 @@ import { CarritoService } from 'src/app/services/carrito.service';
 })
 export class CarritoComponent implements OnInit {
   carrito: any[] = [];
+  recomendaciones: any[] = [];
   total = 0;
 
   constructor(private carritoService: CarritoService,
@@ -39,6 +40,7 @@ export class CarritoComponent implements OnInit {
     this.carrito = carritoActual ? JSON.parse(carritoActual) : [];
 
     this.actualizarTotal();
+    this.obtenerRecomendaciones();
   }
   
   agregarProducto(producto: any): void {
@@ -97,6 +99,7 @@ export class CarritoComponent implements OnInit {
     // Preparar los ítems del carrito como se espera en el backend
     const items = this.carrito.map(item => ({
       producto: item.id,  // ID del producto
+      // producto_nombre: item.nombre, // Nombre del producto
       cantidad: item.cantidad,
       precio_unitario: item.precio  // El backend lo usará para calcular total
     }));
@@ -123,6 +126,25 @@ export class CarritoComponent implements OnInit {
       }
     });
 
+  }
+
+  obtenerRecomendaciones(): void {
+    const nombresProductos = this.carrito.map(p => p.nombre);
+  
+    if (nombresProductos.length === 0) {
+      this.recomendaciones = [];
+      return;
+    }
+  
+    this.api.post('recomendaciones/', { productos: nombresProductos }).subscribe({
+      next: (data:any) => {
+        this.recomendaciones = data.recomendaciones;
+        console.log('📢 Productos recomendados:', this.recomendaciones);
+      },
+      error: (err) => {
+        console.error('Error al obtener recomendaciones', err);
+      }
+    });
   }
   
   

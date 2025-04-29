@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, NgModel, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MaterialModule } from 'src/app/material.module';
 
 @Component({
   standalone: true,
@@ -18,7 +19,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatCardModule,
     MatSelectModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialModule,
+    FormsModule
   ],
   templateUrl: './producto-dialog.component.html',
   styleUrls: ['./producto-dialog.component.scss']
@@ -30,10 +33,39 @@ export class ProductoDialogComponent implements OnInit {
   isEditMode =false;
   previewUrl: string | ArrayBuffer | null = null;
 
+  categorias = [
+    { value: 'telefonos', label: 'Teléfonos y Smartphones' },
+    { value: 'laptops', label: 'Laptops y Notebooks' },
+    { value: 'tablets', label: 'Tablets' },
+    { value: 'acc_movil', label: 'Accesorios para Móviles' },
+    { value: 'acc_pc', label: 'Accesorios para Computadoras' },
+    { value: 'auriculares', label: 'Auriculares y Audífonos' },
+    { value: 'camaras', label: 'Cámaras y Fotografía' },
+    { value: 'wearables', label: 'Smartwatches y Wearables' },
+    { value: 'consolas', label: 'Consolas y Videojuegos' },
+    { value: 'tv', label: 'Televisores y Pantallas' },
+    { value: 'audio', label: 'Audio y Sonido' },
+    { value: 'drones', label: 'Drones' },
+    { value: 'almacenamiento', label: 'Almacenamiento' },
+    { value: 'impresoras', label: 'Impresoras y Escáneres' },
+    { value: 'redes', label: 'Routers y Redes' },
+    { value: 'componentes', label: 'Componentes de PC' },
+    { value: 'electro_inteligente', label: 'Electrodomésticos Inteligentes' },
+    { value: 'monitores', label: 'Monitores' },
+    { value: 'proyectores', label: 'Proyectores' },
+    { value: 'cargadores', label: 'Cargadores y Baterías' },
+    { value: 'perifericos', label: 'Periféricos' },
+    { value: 'hogar_smart', label: 'Hogar Inteligente' },
+    { value: 'powerbank', label: 'Power Banks' },
+    { value: 'software', label: 'Software y Licencias' },
+    { value: 'cables', label: 'Cables y Adaptadores' },
+  ];
+  
+  
 
   constructor(private fb: FormBuilder,
               private dialogRef:MatDialogRef<ProductoDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) private data: any
+              @Inject(MAT_DIALOG_DATA) private data: any,
             ) {}
 
 
@@ -45,6 +77,7 @@ export class ProductoDialogComponent implements OnInit {
       descripcion: [this.data ?.descripcion || '', Validators.required],
       precio: [this.data ?.precio || '', Validators.required],
       stock: [this.data ?.stock || '', Validators.required],
+      categoria: [this.data ?.categoria || '', Validators.required],
       //fecha_creacion: [this.data ?.fecha_creacion || '', Validators.required],
       imagen: [this.data ?.imagen || ''],
     });
@@ -54,22 +87,24 @@ export class ProductoDialogComponent implements OnInit {
       this.previewUrl = this.data.imagen;  // Suponiendo que ya es una URL válida desde el backend
     }
 
+
+
+
+
+
   }
 
-  // onSubmit():void{
-  //   if(this.form.valid){
-  //     const formData = new FormData();
+  
+  filtroCategoria: string = '';
+  categoriasFiltradas() {
+    if (!this.filtroCategoria) {
+      return this.categorias;
+    }
+    return this.categorias.filter(cat =>
+      cat.label.toLowerCase().includes(this.filtroCategoria.toLowerCase())
+    );
+  }
 
-  //     for (const key in this.form.value) {
-        
-  //        formData.append(key, this.form.value[key]);
-      
-  //     }
-
-
-  //     this.dialogRef.close(formData)
-  //   }
-  // }
 
   onSubmit(): void {
     if (this.form.valid) {

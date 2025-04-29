@@ -1,15 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgModule, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { loadStripe } from '@stripe/stripe-js';
+import { QRCodeComponent } from 'angularx-qrcode';
 import { MaterialModule } from 'src/app/material.module';
 import { ApiService } from 'src/app/services/api.service';
 import { CarritoService } from 'src/app/services/carrito.service';
 
+
 @Component({
   selector: 'app-confirmar-pedido',
-  imports: [CommonModule,MaterialModule],
+  imports: [CommonModule,MaterialModule,QRCodeComponent,FormsModule,MatListModule,MatProgressSpinnerModule,MatDividerModule],
   templateUrl: './confirmar-pedido.component.html',
   styleUrl: './confirmar-pedido.component.scss'
 })
@@ -21,6 +27,9 @@ export class ConfirmarPedidoComponent implements OnInit{
   cargando = true;
   tipoEntrega: string = 'tienda';
   metodoPago: string = 'efectivo';
+
+  qrData = '';
+  mostrarQR = false;
 
 
 
@@ -154,6 +163,21 @@ export class ConfirmarPedidoComponent implements OnInit{
       }
     });
   }
+
+
+
+  pagarConQR(): void {
+    if (!this.pedido) {
+      console.warn('No hay pedido cargado');
+      return;
+    }
+  
+    this.qrData = `Simulación de Pago\nPedido #${this.pedido.id}\nTotal: ${this.pedido.monto_total} USD`;
+    this.mostrarQR = true;
+  
+    console.log('QR generado para el pedido:', this.qrData);
+  }
+  
   
 
 }

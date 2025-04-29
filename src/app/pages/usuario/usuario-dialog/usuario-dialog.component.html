@@ -1,0 +1,53 @@
+<mat-card class="cardWithShadow theme-card">
+    <mat-card-header>
+      <mat-card-title class="m-b-0">
+        {{ isEditMode ? 'Editar Usuario' : 'Registrar Usuario' }}
+      </mat-card-title>
+    </mat-card-header>
+  
+    <mat-card-content>
+      <div class="scroll-container">
+        <form [formGroup] = "form" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">Nombre</mat-label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput formControlName="username" placeholder="Nombre del usuario" />
+              </mat-form-field>
+            </div>
+    
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">Contraseña</mat-label>
+              <mat-form-field appearance="outline" class="w-100">
+                <textarea matInput formControlName="password" placeholder="Contraseña"></textarea>
+              </mat-form-field>
+            </div>
+    
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">Correo electronico</mat-label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput formControlName="email"  placeholder="Correo del usuario"  />
+              </mat-form-field>
+            </div>
+    
+            <div class="col-lg-6">
+              <mat-label class="f-w-600 m-b-8 d-block">Rol</mat-label>
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput formControlName="rol" placeholder="Rol del usuario" />
+              </mat-form-field>
+            </div>
+
+          </div>
+    
+          <div class="m-t-16">
+            <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+              {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+            </button>
+            <button mat-stroked-button color="warn" (click)="onCancel()" type="button">Cancelar</button>
+          </div>
+
+        </form>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  

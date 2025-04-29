@@ -65,6 +65,7 @@ export class PedidosComponent implements OnInit{
   }
 
   verDetallePedido(pedido: any): void {
+    console.log('Ver detalles del pedido:', pedido);
     this.dialog.open(PedidoDetallesComponent ,{
       data: pedido,
       width: '500px',

@@ -1,48 +1,200 @@
-<div *ngIf="cargando">Cargando pedido...</div>
-
-<div *ngIf="pedido" class="pedido-container">
-  <h2>📝 Confirmar Pedido</h2>
-  <p><strong>Estado:</strong> {{ pedido.estado }}</p>
-  <p><strong>Fecha:</strong> {{ pedido.fecha_pedido | date }}</p>
-  <p><strong>Monto total:</strong> ${{ pedido.monto_total }}</p>
-
-  <h3>🛒 Productos:</h3>
-  <ul>
-    <li *ngFor="let item of pedido.items">
-      {{ item.producto.nombre }} - {{ item.cantidad }} x ${{ item.precio_unitario }}
-    </li>
-  </ul>
-
-  <!-- Selección de Tipo de Entrega -->
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Tipo de Entrega</mat-label>
-    <mat-select [(value)]="tipoEntrega">
-      <mat-option value="tienda">Recoger en Tienda</mat-option>
-      <mat-option value="delivery">Delivery</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <!-- Selección de Método de Pago -->
-  <mat-form-field appearance="fill" class="full-width">
-    <mat-label>Método de Pago</mat-label>
-    <mat-select [(value)]="metodoPago">
-      <mat-option value="qr">QR</mat-option>
-      <mat-option value="efectivo">Efectivo</mat-option>
-    </mat-select>
-  </mat-form-field>
-
-  <!-- Botones de Acción -->
-  <div class="acciones">
-    <button mat-raised-button color="primary" (click)="pagarConTarjeta()">
-      💳 Pagar con Tarjeta
-    </button>
-
-    <button mat-raised-button color="accent" (click)="finalizarPedido()">
-      ✅ Confirmar Pedido
-    </button>
+<!-- <ng-container *ngIf="cargando; else contenido">
+  <div class="d-flex justify-content-center align-items-center" style="height:200px;">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
   </div>
-</div>
+</ng-container>
 
-<div *ngIf="!pedido && !cargando">
-  <p>No hay pedido pendiente para confirmar.</p>
-</div>
+<ng-template #contenido>
+  <ng-container *ngIf="pedido; else sinPedido">
+
+    <mat-card class="cardWithShadow mx-4 my-4">
+      <mat-card-header class="bg-primary text-white p-3">
+        <mat-card-title class="f-s-20">📝 Confirmar Pedido</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="p-3">
+
+        <div class="row mb-3">
+          <div class="col-4">
+            <strong>Estado:</strong> {{ pedido.estado }}
+          </div>
+          <div class="col-4">
+            <strong>Fecha:</strong> {{ pedido.fecha_pedido | date:'shortDate' }}
+          </div>
+          <div class="col-4">
+            <strong>Total:</strong> {{ pedido.monto_total | currency }}
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+
+        <mat-list>
+          <mat-list-item *ngFor="let item of pedido.items">
+            <div class="w-100">
+              <div class="f-w-500">{{ item.producto_nombre || ''}}</div>
+              <div class="text-muted f-s-14">
+                {{ item.cantidad }} x ${{ item.precio_unitario }} = 
+                <strong>${{ item.cantidad * item.precio_unitario }}</strong>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+
+
+        <div class="d-flex flex-column gap-4">
+
+          <div>
+            <label class="d-block mb-1">Tipo de Entrega</label>
+            <mat-button-toggle-group
+              [(ngModel)]="tipoEntrega"
+              aria-label="Tipo de Entrega"
+              class="d-flex gap-2">
+              <mat-button-toggle value="tienda">Recoger en Tienda</mat-button-toggle>
+              <mat-button-toggle value="delivery">Delivery</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+
+ 
+        <div>
+          <button mat-raised-button color="primary" (input)="metodoPago === 'efectivo'">
+            Pagar con efectivo
+          </button>
+
+          <button mat-raised-button color="primary" (click)="pagarConQR()">
+            Pagar con QR
+          </button>
+
+          <button mat-raised-button color="primary" (click)="pagarConTarjeta()">
+            💳 Pagar con Tarjeta
+          </button>
+      
+          
+          <div *ngIf="mostrarQR" class="qr-container">
+            <h3>Escanea este código QR</h3>
+            <qrcode [qrdata]="qrData" [width]="200" errorCorrectionLevel="M"></qrcode>
+          </div>
+        </div>
+
+      </div>  
+
+        <div class="d-flex justify-content-end mt-4">
+          <button mat-raised-button color="warn" (click)="finalizarPedido()">
+            ✅ Confirmar Pedido
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+  </ng-container>
+
+  <ng-template #sinPedido>
+    <div class="text-center my-5">
+      <p>No hay pedido pendiente para confirmar.</p>
+    </div>
+  </ng-template>
+</ng-template>
+ -->
+
+ <!-- confirmar-pedido.component.html -->
+
+<ng-container *ngIf="cargando; else contenido">
+  <div class="d-flex justify-content-center align-items-center" style="height:200px;">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+  </div>
+</ng-container>
+
+<ng-template #contenido>
+  <ng-container *ngIf="pedido; else sinPedido">
+
+    <!-- DEBUG: descomenta para ver estructura real -->
+    <!-- <pre>{{ pedido | json }}</pre> -->
+
+    <mat-card class="cardWithShadow mx-4 my-4">
+
+      <mat-card-header class="bg-primary text-white p-3">
+        <mat-card-title class="f-s-20">📝 Confirmar Pedido</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="p-3">
+        <!-- 1. Datos del pedido -->
+        <div class="row mb-3">
+          <div class="col-4"><strong>Estado:</strong> {{ pedido.estado }}</div>
+          <div class="col-4"><strong>Fecha:</strong> {{ pedido.fecha_pedido | date:'short' }}</div>
+          <div class="col-4"><strong>Total:</strong> {{ pedido.monto_total | currency }}</div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- 2. Lista de ítems con nombre y subtotal -->
+        <h3 class="f-s-18 my-3">🛒 Productos</h3>
+        <mat-list>
+          <ng-container *ngFor="let item of pedido.items; let last = last">
+            <mat-list-item class="py-2">
+              <div class="w-100">
+
+                <!-- Detalle y subtotal -->
+                <div class="text-muted f-s-14">
+                  {{ item.producto_nombre}} : {{ item.cantidad }} × {{ item.precio_unitario | currency }} =
+                  <strong>{{ (item.cantidad * item.precio_unitario) | currency }}</strong>
+                </div>
+              </div>
+            </mat-list-item>
+            <mat-divider *ngIf="!last"></mat-divider>
+          </ng-container>
+        </mat-list>
+
+        <mat-divider class="my-3"></mat-divider>
+
+        <!-- 3. Tipo de Entrega -->
+        <div class="d-flex flex-column gap-4">
+          <div>
+            <label class="d-block mb-1">Tipo de Entrega</label>
+            <mat-button-toggle-group
+              [(ngModel)]="tipoEntrega"
+              aria-label="Tipo de Entrega"
+              class="d-flex gap-2">
+              <mat-button-toggle value="tienda">Recoger en Tienda</mat-button-toggle>
+              <mat-button-toggle value="delivery">Delivery</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
+
+          <!-- 4. Método de Pago -->
+          <div>
+            <label class="d-block mb-1">Método de Pago</label>
+            <div class="d-flex flex-column gap-2">
+              <button mat-raised-button color="primary" (click)="pagarConQR()">
+                🎫 Pagar con QR
+              </button>
+              <button mat-raised-button color="primary" (click)="pagarConTarjeta()">
+                💳 Pagar con Tarjeta
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Mostrar QR si aplica -->
+        <div *ngIf="mostrarQR" class="text-center mt-4">
+          <h3 class="f-s-18">Escanea este código QR</h3>
+          <qrcode [qrdata]="qrData" [width]="200" errorCorrectionLevel="M"></qrcode>
+        </div>
+
+        <!-- 6. Botón Confirmar Pedido -->
+        <div class="d-flex justify-content-end mt-4">
+          <button mat-raised-button color="warn" (click)="finalizarPedido()">
+            ✅ Confirmar Pedido
+          </button>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+
+  </ng-container>
+
+  <!-- 7. Sin pedido -->
+  <ng-template #sinPedido>
+    <div class="text-center my-5">
+      <p>No hay pedido pendiente para confirmar.</p>
+    </div>
+  </ng-template>
+</ng-template>

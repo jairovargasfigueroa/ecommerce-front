@@ -1,4 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-
+.logo-responsive {
+    display: block;
+    margin: 0 auto 1rem;   /* centrado y separador inferior */
+    max-width: 120px;       /* nunca más ancho de 120px */
+    width: 150%;            /* escala hasta el máximo permitido */
+    height: auto;           /* mantiene proporción */
+  }
+  
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -37,6 +37,20 @@
             </mat-form-field>
           </div>
 
+          <!-- ✅ CORREGIDO: Select de categoría -->
+          <mat-form-field appearance="fill" class="w-100">
+            <mat-label>Categoría</mat-label>
+            
+            <!-- Input para buscar -->
+            <input matInput placeholder="Buscar categoría..." [(ngModel)]="filtroCategoria" />
+          
+            <mat-select formControlName="categoria">
+              <mat-option *ngFor="let cat of categoriasFiltradas()" [value]="cat.value">
+                {{ cat.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>         
+
           <!-- Imagen y previsualización -->
           <div class="col-lg-12 d-flex align-items-center justify-content-between m-t-12">
             <div>

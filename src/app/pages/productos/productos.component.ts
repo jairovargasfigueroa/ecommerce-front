@@ -38,7 +38,7 @@ export class ProductosComponent implements OnInit {
   paginaActual = 1;
 
   displayedColumns: string[] = [
-     'imagen','nombre', 'descripcion', 'precio', 'stock', 'fecha_creacion','acciones'
+     'imagen','nombre', 'descripcion', 'precio', 'stock','categoria', 'fecha_creacion','acciones'
   ];
 
   dataSource = new MatTableDataSource<any>();
@@ -55,14 +55,15 @@ export class ProductosComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getProductos();
+    //this.obtenerProductos();
   }
 
   
 
-  getProductos() {
+  obtenerProductos() {
     const pagina = this.paginator.pageIndex + 1;
-    this.apiService.get<any>('productos/',{page:pagina}).subscribe({
+    const page_size = this.paginator.pageSize;
+    this.apiService.get<any>('productos/',{page:pagina,page_size:page_size}).subscribe({
       next: (data) =>{ 
         this.dataSource.data = data.results;
         this.totalRegistros = data.count;
@@ -75,8 +76,8 @@ export class ProductosComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.getProductos(); // cargar página inicial
-    this.paginator.page.subscribe(() => this.getProductos());
+    this.obtenerProductos(); // cargar página inicial
+    this.paginator.page.subscribe(() => this.obtenerProductos());
   }
 
 
@@ -93,7 +94,7 @@ export class ProductosComponent implements OnInit {
     const dialogRef = this.dialog.open(ProductoDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.apiService.post('productos/', result,1).subscribe(() => this.getProductos());
+        this.apiService.post('productos/', result,1).subscribe(() => this.obtenerProductos());
       }
     });
   }
@@ -107,13 +108,13 @@ export class ProductosComponent implements OnInit {
       if (result) {
         console.log('Producto a editadar:', result);
         const {id,... produtoEditado} =result;
-        this.apiService.put('productos', producto.id, result,1).subscribe(() => this.getProductos());
+        this.apiService.put('productos', producto.id, result,1).subscribe(() => this.obtenerProductos());
       }
     });
   }
 
   eliminarProducto(id: number): void {
-    this.apiService.delete('productos', id).subscribe(() => this.getProductos());
+    this.apiService.delete('productos', id).subscribe(() => this.obtenerProductos());
   }
 
 }

@@ -13,7 +13,7 @@ import { navItems } from './sidebar-data';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [BrandingComponent, TablerIconsModule, MaterialModule],
+  imports: [ TablerIconsModule, MaterialModule],
   templateUrl: './sidebar.component.html',
 })
 export class SidebarComponent implements OnInit {

@@ -30,5 +30,16 @@
     <button mat-raised-button color="warn" (click)="vaciarCarrito()">Vaciar carrito</button>
   </div>
 
+  <div *ngIf="recomendaciones.length > 0">
+    <h3>Productos Recomendados</h3>
+    <div *ngFor="let producto of recomendaciones" class="recomendacion">
+      <p>{{ producto.nombre }} - {{ producto.precio }} USD</p>
+      <img [src]="producto.imagen" alt="{{ producto.nombre }}" width="100">
+    </div>
+  </div>
+  
   <p *ngIf="!carrito.length">Tu carrito está vacío.</p>
+
+  
+  
 </div>
