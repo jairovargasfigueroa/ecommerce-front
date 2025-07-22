@@ -9,22 +9,22 @@ export const navItems: NavItem[] = [
     iconName: 'solar:atom-line-duotone',
     route: '/dashboard',
   },
-  {
-    displayName: 'Analytics',
-    iconName: 'solar:widget-add-line-duotone',
-    route: 'https://materialm-angular-main.netlify.app/dashboards/dashboard1',
-    chip: true,
-    external: true,
-    chipClass: 'bg-secondary text-white',
-    chipContent: 'PRO',
-  },
+  // {
+  //   displayName: 'Analytics',
+  //   iconName: 'solar:widget-add-line-duotone',
+  //   route: 'https://materialm-angular-main.netlify.app/dashboards/dashboard1',
+  //   chip: true,
+  //   external: true,
+  //   chipClass: 'bg-secondary text-white',
+  //   chipContent: 'PRO',
+  // },
   {
     displayName: 'Pedidos',
     iconName: 'solar:bag-3-line-duotone', // Puedes usar cualquier ícono de Solar Icons
     route: '/pedidos',             // Debe coincidir con la ruta configurada
     roles: ['admin','cliente','delivery'] // Solo el rol administrador puede acceder a esta ruta
   },
-  
+
   {
     displayName: 'Usuarios',
     iconName: 'solar:bag-3-line-duotone', // Puedes usar cualquier ícono de Solar Icons
@@ -104,7 +104,7 @@ export const navItems: NavItem[] = [
     iconName: 'solar:tablet-line-duotone',
     route: '/ui-components/tables',
   },
-  
+
 
   {
     divider: true,
@@ -130,18 +130,18 @@ export const navItems: NavItem[] = [
     divider: true,
     navCap: 'Forms',
   },
-  
-  
+
+
   {
     divider: true,
     navCap: 'Tables',
   },
-  
+
   {
     divider: true,
     navCap: 'Chart',
   },
-  
+
   {
     divider: true,
     navCap: 'Auth',
@@ -202,5 +202,5 @@ export const navItems: NavItem[] = [
       },
     ],
   },
-  
+
 ];

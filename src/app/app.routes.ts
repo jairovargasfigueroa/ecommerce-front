@@ -25,7 +25,7 @@ export const routes: Routes = [
           import('./pages/pedidos/pedidos.component').then((m) => m.PedidosComponent),
         canActivate:[authGuard(['admin','cliente',])]
       },
-      
+
       {
         path: 'confirmar-pedido',
         loadComponent: () =>
@@ -45,13 +45,13 @@ export const routes: Routes = [
           import('./pages/pagos/pago-cancelado/pago-cancelado.component').then((m) => m.PagoCanceladoComponent),
       },
 
-      
-      
+
+
       {
         path: 'usuarios',
         loadComponent: () =>
           import('./pages/usuario/usuario.component').then((m) => m.UsuarioComponent),
-        canActivate:[authGuard(['admin'])]
+        canActivate:[authGuard(['admin','cliente'])]
       },
 
       {
@@ -68,7 +68,7 @@ export const routes: Routes = [
             (m) => m.CategoriasComponent
           ),
       },
-      
+
       {
         path: 'catalogo',
         loadComponent: () =>
@@ -104,7 +104,7 @@ export const routes: Routes = [
           import('./pages/authentication/authentication.routes').then(
             (m) => m.AuthenticationRoutes
           ),
-        
+
       },
     ],
   },
